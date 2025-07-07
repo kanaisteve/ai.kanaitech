@@ -1,0 +1,386 @@
+# Laravel and Vite Dev Server Relationship
+
+You need both servers because they serve different purposes:
+
+1. **Laravel Server (php artisan serve)**
+- Handles PHP/Laravel backend
+- Serves your blade templates
+- Processes API requests
+- Manages sessions and authentication
+
+2. **Vite Dev Server (npm run dev)**
+- Provides Hot Module Replacement (HMR)
+- Compiles React/JSX in real-time
+- Handles asset bundling
+- Enables instant CSS updates
+- Provides source maps for debugging
+
+When you visit `http://localhost:8000`:
+1. Laravel serves the `app.blade.php` template
+2. The `@vite` directive injects scripts that connect to Vite
+3. Vite handles all asset updates without page refresh
+
+If you only run Laravel server without Vite:
+- No hot reloading
+- Changes to React components won't update
+- Need to manually rebuild assets
+- Development experience suffers
+
+Here's how they work together:
+
+```mermaid
+graph LR
+    A[Browser] --> B[Laravel Server :8000]
+    B --> C[app.blade.php]
+    C --> D[Vite Server :5173]
+    D --> E[React/JS/CSS Updates]
+    E --> A
+```
+
+**Alternative for Production:**
+For production, you don't need both servers. You run:
+```bash
+npm run build
+```
+This builds static assets that Laravel serves directly without Vite.
+
+
+Standalone React + Laravel API Architecture
+============================================
+
+For a decoupled React frontend with Laravel API backend, here's the recommended approach:
+
+1. Create Two Separate Projects
+    Laravel project for API backend
+    Vite+React project for frontend
+
+
+2. Frontend Setup (React)
+
+    ```
+    import { defineConfig } from 'vite'
+    import react from '@vitejs/plugin-react'
+
+    export default defineConfig({
+    plugins: [react()],
+    server: {
+        proxy: {
+        '/api': {
+            target: 'http://localhost:8000',
+            changeOrigin: true
+        }
+        }
+    }
+    })
+```
+
+3. API Configuration (Laravel)
+
+    ```
+    <?php
+    // filepath: config/cors.php
+    return [
+        'paths' => ['api/*'],
+        'allowed_methods' => ['*'],
+        'allowed_origins' => ['http://localhost:5173'],
+        'allowed_headers' => ['*'],
+        'exposed_headers' => [],
+        'max_age' => 0,
+        'supports_credentials' => true,
+    ];
+    ```
+
+4. Project Structure
+
+frontend/                 # React application
+├── src/
+│   ├── main.jsx
+│   ├── App.jsx
+│   └── api/
+│       └── client.js    # API client configuration
+└── package.json
+
+backend/                  # Laravel API
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       └── Api/     # API controllers
+└── routes/
+    └── api.php          # API routes
+
+
+5. API Client Setup
+
+    ```
+    import axios from 'axios'
+
+    const api = axios.create({
+    baseURL: '/api',
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    withCredentials: true
+    })
+
+    export default api
+    ```
+
+Benefits of This Approach:
+    - Clear separation of concerns
+    - Independent deployment possible
+    - Easier to scale frontend/backend separately
+    - Can use different teams for frontend/backend
+    - Simpler development setup
+    - No need for Laravel Vite plugin
+    - Frontend can be hosted anywhere (Vercel, Netlify, etc.)
+
+Development Workflow:
+
+1. Start Laravel API:
+
+    cd backend
+    php artisan serve
+
+2. Start React development
+
+    cd frontend
+    npm run dev
+
+This setup gives you the flexibility of a true SPA while 
+maintaining a clean API architecture.
+
+
+
+React Inside Laravel Project Structure
+=======================================
+
+Here's how to structure a React app within Laravel:
+
+Project Structure
+
+laravel-project/
+├── resources/
+│   ├── js/
+│   │   ├── components/     # React components
+│   │   ├── pages/         # React pages/views
+│   │   ├── services/      # API services
+│   │   ├── app.jsx        # React app root
+│   │   └── main.jsx       # Entry point
+│   └── views/
+│       └── app.blade.php   # Single blade template
+├── routes/
+│   ├── api.php            # API routes
+│   └── web.php            # Single route for SPA
+└── vite.config.js         # Vite configuration
+
+Configuration Files
+    1. Vite Configuration
+
+        ```
+        import { defineConfig } from 'vite';
+        import laravel from 'laravel-vite-plugin';
+        import react from '@vitejs/plugin-react';
+
+        export default defineConfig({
+            plugins: [
+                laravel({
+                    input: ['resources/css/app.css', 'resources/js/main.jsx'],
+                    refresh: true,
+                }),
+                react(),
+            ],
+        });
+        ```
+
+    2. Web Routes
+        ```
+        <?php
+        // filepath: routes/web.php
+        Route::get('/{any}', function () {
+            return view('app');
+        })->where('any', '.*');
+        ```
+
+    3. API Service
+
+        ```
+        import axios from 'axios';
+
+        const api = axios.create({
+            baseURL: '/api',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            withCredentials: true
+        });
+
+        export default api;
+        ```
+
+    4. Main Entry Point
+
+        ```
+        import React from 'react';
+        import ReactDOM from 'react-dom/client';
+        import App from './app';
+        import '../css/app.css';
+
+        ReactDOM.createRoot(document.getElementById('app')).render(
+            <React.StrictMode>
+                <App />
+            </React.StrictMode>
+        );
+        ```
+
+    Development Workflow:
+        1. Run both Laravel and Vite:
+            # Terminal 1 - Laravel server
+            php artisan serve
+
+            # Terminal 2 - Vite dev server
+            npm run dev
+
+        2. Access your app at http://localhost:8000
+
+    Benefits of this Approach:
+        Single deployment
+        Shared authentication
+        Easy access to Laravel features
+        No CORS configuration needed
+        Simpler development setup
+        Laravel's security features available
+        Session handling out of the box
+
+    This setup gives you a monolithic application with 
+    React handling the frontend while keeping the 
+    benefits of Laravel's ecosystem.
+
+
+Using API Service in React Components Pt. 1
+============================================
+
+First, let's create an API service file:
+
+```
+import axios from 'axios';
+
+const api = axios.create({
+    baseURL: '/api',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+    },
+    withCredentials: true
+});
+
+export const getProjects = () => api.get('/projects');
+export const getServices = () => api.get('/services');
+export const sendContact = (data) => api.post('/contact', data);
+
+export default api;
+```
+
+Then, use it in your components. Here's an example for the Projects component:
+
+```
+import { useState, useEffect } from 'react';
+import { getProjects } from '../services/api';
+
+export default function Projects() {
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const response = await getProjects();
+                setProjects(response.data);
+            } catch (err) {
+                setError('Failed to fetch projects');
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProjects();
+    }, []);
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
+
+    return (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map(project => (
+                <div key={project.id} className="border p-4 rounded-lg">
+                    <h2 className="text-xl font-bold">{project.title}</h2>
+                    <p>{project.description}</p>
+                </div>
+            ))}
+        </div>
+    );
+}
+```
+
+For the Contact form component:
+
+```
+import { useState } from 'react';
+import { sendContact } from '../services/api';
+
+export default function Contact() {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+    const [status, setStatus] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await sendContact(formData);
+            setStatus('Message sent successfully!');
+            setFormData({ name: '', email: '', message: '' });
+        } catch (err) {
+            setStatus('Failed to send message.');
+            console.error(err);
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="max-w-lg mx-auto space-y-4">
+            <input
+                type="text"
+                placeholder="Name"
+                value={formData.name}
+                onChange={e => setFormData({...formData, name: e.target.value})}
+                className="w-full p-2 border rounded"
+            />
+            {/* ...other form fields... */}
+            {status && <div className="text-center">{status}</div>}
+        </form>
+    );
+}
+```
+
+Don't forget to install axios:
+
+cd kanai-tech
+npm install axios
+
+
+This setup provides:
+    Centralized API calls
+    Error handling
+    Loading states
+    Form submission
+    Proper CSRF handling with Laravel
+    Reusable API functions
+
+
+
+

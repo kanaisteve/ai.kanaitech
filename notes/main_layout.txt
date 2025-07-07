@@ -1,0 +1,33 @@
+This MainLayout provides:
+
+Responsive Navbar
+    - Company logo/name
+    - Navigation links
+    - Mobile-friendly (hidden on mobile, 
+        needs hamburger menu implementation)
+
+Main Content Area
+    - Uses Outlet from React Router for rendering page content
+    - Flexible container with padding
+    - Grows to fill available space
+
+Footer
+    - Three-column layout
+    - About section
+    - Quick links
+    - Contact information
+
+Styling
+    - Uses Tailwind CSS
+    - Responsive design
+    - Consistent spacing
+    - Dark theme for navbar and footer
+
+The layout will be consistent across all pages, and 
+the content from your route components (Home, About, etc.) 
+will be rendered in the main content area.
+
+
+Next:
+    Would you like me to add a mobile menu 
+    (hamburger menu) for better responsive design?
