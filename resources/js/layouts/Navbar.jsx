@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
@@ -13,11 +13,11 @@ const navigation = [
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
       <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-      {/* <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global"> */}
         <div className="flex lg:flex-1">
           <Link to="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Kanai Technologies</span>
@@ -43,7 +43,9 @@ const Navbar = () => {
             <Link
               key={item.name}
               to={item.href}
-              className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-600"
+              className={`text-sm font-semibold leading-6 ${
+                location.pathname === item.href ? 'text-red-600' : 'text-gray-900 hover:text-red-600'
+              }`}
             >
               {item.name}
             </Link>
@@ -83,7 +85,9 @@ const Navbar = () => {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${
+                      location.pathname === item.href ? 'text-red-600 bg-gray-50' : 'text-gray-900 hover:bg-gray-50'
+                    }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}

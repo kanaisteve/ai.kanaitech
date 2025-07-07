@@ -109,7 +109,16 @@ const Footer = () => {
             © {new Date().getFullYear()} Kanai Technologies. All rights reserved.
           </div>
           <div className="mt-4 flex justify-center space-x-6 md:mt-0">
-            {/* ...existing social links map... */}
+            {socialLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-gray-500 hover:text-red-500"
+                aria-label={link.name}
+              >
+                <link.icon className="h-6 w-6" />
+              </a>
+            ))}
           </div>
         </div>
       </div>
