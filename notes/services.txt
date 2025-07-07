@@ -1,0 +1,135 @@
+Kanai Technologies
+
+1. Identity & Mission
+    - AI-first innovation company
+    - Focus on African businesses
+    - SME empowerment
+
+2. Core Services
+    - Custom ERPs
+    - AI-driven tools
+    - Digital lending
+    - Property platforms
+
+3. Value Proposition
+    - Accessible
+    - Localized
+    - Affordable
+
+4. Target Market
+
+    - African SMEs
+    - Local businesses
+    - Growing enterprises
+
+==============================
+
+Empowering African SMEs with AI Solutions
+
+Your partner in digital transformation. We deliver custom ERP, AI chatbots, lending solutions, and property management platforms tailored for African businesses.# Kanaitech Services for African SMEs
+
+1. **AI-Powered Solutions**
+   - Custom AI Chatbots
+   - Predictive Analytics
+   - Machine Learning Integration
+   - Automated Decision Systems
+
+2. **Digital Financial Services**
+   - SME Lending Platform
+   - Payment Integration
+   - Financial Analytics
+   - Digital Banking Tools
+
+3. **Custom ERP Solutions**
+   - Business Process Automation
+   - Inventory Management
+   - Customer Relationship Management
+   - Supply Chain Optimization
+
+4. **Property Tech Platform**
+   - Property Management
+   - Rental Solutions
+   - Real Estate Analytics
+   - Digital Property Listings
+
+Let's update the Hero component to better reflect these services:
+
+````jsx
+<div className="text-center">
+  <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+    Empowering African SMEs with AI Solutions
+  </h1>
+  <p className="mt-6 text-lg leading-8 text-gray-600">
+    Your partner in digital transformation. We deliver custom ERP, AI chatbots, lending solutions, and property management platforms tailored for African businesses.
+  </p>
+  <div className="mt-10 flex items-center justify-center gap-x-6">
+    // ...existing code...
+  </div>
+</div>
+````
+
+Kanaitech emphasizes:
+- AI-first approach
+- Local context (African market)
+- Specific solutions (ERP, AI, Lending, Property)
+- SME-centric services
+
+
+# Detailed Kanaitech Service Offerings
+
+Let's update the Services component with comprehensive service descriptions that better reflect Kanaitech's offerings for African SMEs:
+
+````jsx
+const services = [
+  {
+    title: "AI Solutions & Chatbots",
+    description: "Smart AI chatbots and automation tools tailored for African businesses, enabling 24/7 customer support and streamlined operations.",
+    icon: CpuChipIcon,
+  },
+  {
+    title: "Digital Lending Platform",
+    description: "Innovative lending solutions with AI-powered risk assessment, helping African SMEs access quick and reliable financing.",
+    icon: BanknotesIcon,
+  },
+  {
+    title: "Custom ERP Systems",
+    description: "Tailored enterprise systems that integrate finance, sales, inventory, and customer management, designed for streamlined business operations.",
+    icon: CircleStackIcon,
+  },
+  {
+    title: "Property Tech Platform",
+    description: "Digital solutions for property management, rental payments, and real estate analytics built for the African market.",
+    icon: ShieldCheckIcon,
+  },
+  {
+    title: "Web Development",
+    description: "Modern, responsive web applications with integrated payment systems and local payment provider support.",
+    icon: (props) => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+        <path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm0 8a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm0 8a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2z" />
+      </svg>
+    )
+  },
+  {
+    title: "Data Analytics",
+    description: "Advanced analytics and reporting tools that help African businesses make data-driven decisions and optimize operations.",
+    icon: ClipboardDocumentCheckIcon,
+  }
+];
+````
+
+Key updates made:
+- Added Digital Lending Platform service
+- Added Property Tech Platform service
+- Enhanced descriptions to emphasize African market focus
+- Reorganized services to highlight core offerings
+- Used appropriate icons from HeroIcons
+- Kept descriptions concise but informative
+- Added local payment systems integration mention
+- Emphasized AI-first approach across services
+
+The services now better reflect Kanaitech's complete offering while maintaining the existing card design and layout structure.
+
+Would you like me to also update the section header and subheader to better align with these services?
+
+

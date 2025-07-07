@@ -26,10 +26,10 @@ const Hero = () => {
         </div>
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Building Digital Solutions for Tomorrow
+            Built for Africa, Ready for the Future
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            We specialize in creating innovative software solutions that help businesses transform and grow in the digital age.
+            Whether you're running a small shop in Lusaka, managing rentals in Nairobi, or hosting events in Kigali, our platform is designed with your reality in mind — low overhead, high impact, and ready to grow with you. We’re not just digitizing businesses. We’re powering a smarter African economy — one module at a time
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a

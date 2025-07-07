@@ -6,11 +6,11 @@ const Footer = () => {
     { name: 'Contact', href: '/contact' },
   ];
 
-  const products = [
-    { name: 'Web Development', href: '/services#web' },
-    { name: 'Mobile Apps', href: '/services#mobile' },
-    { name: 'Cloud Solutions', href: '/services#cloud' },
+  const services = [
     { name: 'AI Services', href: '/services#ai' },
+    { name: 'Mobile Apps', href: '/services#mobile' },
+    { name: 'Web Development', href: '/services#web' },
+    { name: 'Cloud Solutions', href: '/services#cloud' },
   ];
 
   const contactInfo = {
@@ -49,8 +49,11 @@ const Footer = () => {
               alt="Kanai Tech"
             />
             <p className="text-gray-500 text-sm">
-              Empowering businesses through innovative technology solutions and digital transformation.
+              Kanai Technologies is an AI-first innovation company. We are building the intelligent infrastructure for intelligent African businesses — one AI-powered module at a time, data-driven, multilingual, affordable.
             </p>
+            {/* <p className="text-gray-500 text-sm">
+              Kanai Technologies is building intelligent digital solutions for African businesses. We empower SMEs with AI-driven tools, from custom ERPs and chatbots to lending and property platforms - making technology accessible, localized, and affordable.
+            </p> */}
           </div>
 
           {/* Quick Links Column */}
@@ -67,14 +70,14 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Products Column */}
+          {/* Services Column */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">Products</h3>
+            <h3 className="text-sm font-semibold text-gray-900 mb-4">Services</h3>
             <ul className="space-y-3">
-              {products.map((product) => (
-                <li key={product.name}>
-                  <a href={product.href} className="text-sm text-gray-500 hover:text-gray-900">
-                    {product.name}
+              {services.map((service) => (
+                <li key={service.name}>
+                  <a href={service.href} className="text-sm text-gray-500 hover:text-gray-900">
+                    {service.name}
                   </a>
                 </li>
               ))}
