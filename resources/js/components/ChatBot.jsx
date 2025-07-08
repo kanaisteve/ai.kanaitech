@@ -1,15 +1,29 @@
 import { useState, useRef, useEffect } from 'react';
 
 const faqs = {
-  "What is Kanai Technologies?": "We're an AI-first company helping SMEs in Africa.",
+  "Hello": "Hi there! How can I assist you today?",
+  "Hi": "Hello there! How can I assist you today?",
+  "How are you?": "I am fine thank you. How are you?",
+  "Am fine": "Great to hear! How can I assist you today?",
+  "Am okay": "Great to hear! How can I assist you today?",
+  "What is your name?": "My name is Kisu, your AI assistant.",
+  "What is Kanai Technologies?": "We\'re an AI-first company helping SMEs in Africa.",
+  "What does Kanai Technologies do?": "We build AI-driven tools for SMEs.",
   "What services do you offer?": "Custom ERP, AI Bots, Lending & Property platforms.",
-  "How do I contact support?": "Use the contact form or email support@kanai.com"
+  "what are your business hours?": "We are open from 9 AM to 5 PM, Monday to Friday.",
+  "How do I contact support?": "Use the contact form or email info@kanaitech.com",
 };
 
 const WELCOME_MESSAGE = {
   text: "Hi! I'm Kisu, Kanaitech AI sales expert 🤖. How can I help you today?",
   from: 'bot'
 };
+
+const SUGGESTED_QUESTIONS = [
+    "What is Kanai Technologies?",
+    "What services do you offer?",
+    "How do I contact support?"
+];
 
 const ChatBot = () => {
     const [messages, setMessages] = useState([]);
@@ -43,12 +57,19 @@ const ChatBot = () => {
         setInput('');
     };
 
+    // const handleSend = () => {
+    //     const match = faqs.find(f => f.q.toLowerCase() === input.toLowerCase());
+    //     const answer = match ? match.a : "Sorry, I don’t have an answer to that.";
+    //     setChat([...chat, { type: 'user', text: input }, { type: 'bot', text: answer }]);
+    //     setInput("");
+    // };
+
     return (
         <div className="fixed bottom-4 right-4 z-50">
             {isOpen && (
                 <div className="flex flex-col h-[500px] w-[350px] bg-gray-100 rounded-lg shadow-lg mb-4">
                     <div className="flex justify-between items-center p-4 bg-red-500 text-white rounded-t-lg">
-                        <h3 className="font-semibold">Chat with us</h3>
+                        <h3 className="font-semibold">Chat with Kisu</h3>
                         <button 
                             onClick={() => setIsOpen(false)}
                             className="text-white hover:text-gray-200"
@@ -70,13 +91,29 @@ const ChatBot = () => {
                         ))}
                         <div ref={messagesEndRef} />
                     </div>
-                    <div className="p-4 border-t">
+                    <div className="p-4 border-t space-y-4">
+                        <div className="flex flex-wrap gap-2">
+                            {messages.length <= 1 && SUGGESTED_QUESTIONS.map((question, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => {
+                                        const userMsg = { text: question, from: 'user' };
+                                        const botMsg = { text: faqs[question], from: 'bot' };
+                                        setMessages([...messages, userMsg, botMsg]);
+                                        setInput('');
+                                    }}
+                                    className="px-3 py-1.5 text-sm bg-white hover:bg-gray-50 text-gray-700 rounded-full border border-gray-300 transition-colors"
+                                >
+                                    {question}
+                                </button>
+                            ))}
+                        </div>
                         <div className="flex gap-2">
                             <input
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+    className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 hover:border-red-400 transition-colors"
                                 placeholder="Ask a question..."
                                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                             />

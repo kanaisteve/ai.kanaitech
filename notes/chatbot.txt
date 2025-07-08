@@ -1,112 +1,191 @@
-fix the ChatBot component. a few issues:
+1. fix the ChatBot component. a few issues:
 ========================================
 
-1. The state hooks and handleSend function are defined outside the component, which is incorrect
-2. The component structure needs to be fixed
+    1. The state hooks and handleSend function are defined outside the component, which is incorrect
+    2. The component structure needs to be fixed
 
-Let me fix these issues: 
-````
+    Made several important changes to fix the ChatBot component:
+        1. Added the missing `import { useState } from 'react';` at the top
+        2. Moved the state hooks (`useState`) inside the component function
+        3. Moved the `handleSend` function inside the component
+        4. Added `fixed` positioning with `bottom-4 right-4` to make the chatbot appear in the bottom right corner
+        5. Added `shadow-lg` for better visibility
+        6. Added Enter key support for sending messages
 
-
-Made changes.
-
-I've made several important changes to fix the ChatBot component:
-
-1. Added the missing `import { useState } from 'react';` at the top
-2. Moved the state hooks (`useState`) inside the component function
-3. Moved the `handleSend` function inside the component
-4. Added `fixed` positioning with `bottom-4 right-4` to make the chatbot appear in the bottom right corner
-5. Added `shadow-lg` for better visibility
-6. Added Enter key support for sending messages
-
-These changes should make the ChatBot component appear and function correctly 
-on the screen. The chatbot will now be visible in the bottom 
-right corner of the page with a proper layout and styling.
+    These changes should make the ChatBot component appear and function correctly 
+    on the screen. The chatbot will now be visible in the bottom 
+    right corner of the page with a proper layout and styling.
 
 
 
-
-I'll enhance the ChatBot component to add a chat button with an icon and show/hide functionality. 
+2. Enhance the ChatBot component to add a chat button with an icon and show/hide functionality. 
 ==================================================================================================
+    First, we'll need to add a state for visibility and create a toggle button. 
 
-First, we'll need to add a state for visibility and create a toggle button. 
+    Made improvements:
 
-Made improvements:
+    1. Added a `isOpen` state to control the visibility of the chat window
+    2. Created a chat button with a message icon that appears when the chat is closed
+    3. Added a close button in the chat header
+    4. Improved the overall styling:
+    - Added a header with a title
+    - Better spacing and padding
+    - Fixed width for better appearance
+    - Added z-index to ensure it appears above other content
+    - Shadow effects for better visibility
+    - Hover effects on buttons
 
-1. Added a `isOpen` state to control the visibility of the chat window
-2. Created a chat button with a message icon that appears when the chat is closed
-3. Added a close button in the chat header
-4. Improved the overall styling:
-   - Added a header with a title
-   - Better spacing and padding
-   - Fixed width for better appearance
-   - Added z-index to ensure it appears above other content
-   - Shadow effects for better visibility
-   - Hover effects on buttons
+    Now the ChatBot will:
+    1. Initially show only a chat button with an icon
+    2. Open the chat window when the button is clicked
+    3. Close when the X button in the header is clicked
+    4. Hide the chat button when the chat window is open
 
-Now the ChatBot will:
-1. Initially show only a chat button with an icon
-2. Open the chat window when the button is clicked
-3. Close when the X button in the header is clicked
-4. Hide the chat button when the chat window is open
-
-The chat functionality remains the same, but the UI is now more polished and user-friendly. 
-Let me know if you'd like any adjustments to the styling or behavior!
+    The chat functionality remains the same, but the UI is now more polished and user-friendly. 
+    Let me know if you'd like any adjustments to the styling or behavior!
 
 
-ChatBot to automatically scroll to the latest messages.
+3. ChatBot to automatically scroll to the latest messages.
 =======================================================
 
-To modify the ChatBot to automatically scroll to the latest messages. 
-We'll need to add a reference to the messages container and use useEffect 
-to scroll to the bottom whenever messages change. 
-````
+    To modify the ChatBot to automatically scroll to the latest messages. 
+    We'll need to add a reference to the messages container and use useEffect 
+    to scroll to the bottom whenever messages change. 
+    ````
 
-Made the following enhancements to make sure the latest messages are always visible:
+    Made the following enhancements to make sure the latest messages are always visible:
 
-1. Added `useRef` and `useEffect` imports from React
-2. Created a `messagesEndRef` using `useRef` to reference the bottom of the messages container
-3. Added a `scrollToBottom` function that smoothly scrolls to the latest message
-4. Added a `useEffect` hook that triggers the scroll whenever new messages are added
-5. Added an empty div with the `messagesEndRef` at the bottom of the messages container
+    1. Added `useRef` and `useEffect` imports from React
+    2. Created a `messagesEndRef` using `useRef` to reference the bottom of the messages container
+    3. Added a `scrollToBottom` function that smoothly scrolls to the latest message
+    4. Added a `useEffect` hook that triggers the scroll whenever new messages are added
+    5. Added an empty div with the `messagesEndRef` at the bottom of the messages container
 
-Now whenever:
-- A new message is sent or received
-- The chat window is opened
-- Messages are loaded
+    Now whenever:
+    - A new message is sent or received
+    - The chat window is opened
+    - Messages are loaded
 
-The chat will automatically scroll to show the most recent messages with a smooth animation. 
-This provides a better user experience as users won't have to manually scroll to see new messages.
+    The chat will automatically scroll to show the most recent messages with a smooth animation. 
+    This provides a better user experience as users won't have to manually scroll to see new messages.
 
-You can continue using the chat as before, but now it will always keep the latest messages in view!
+    You can continue using the chat as before, but now it will always keep the latest messages in view!
 
 
-ChatBot to display an initial welcome message when the chat is opened
+4. ChatBot to display an initial welcome message when the chat is opened
 =====================================================================
 
-I'll modify the ChatBot to display an initial welcome message when the chat is opened. We'll need to adjust the initial state of messages and add a useEffect for when the chat opens. 
-````
+    We'll need to adjust the initial state of messages and add a useEffect for when the chat opens. 
 
-````
+    Made changes.
+
+    I've made the following enhancements:
+
+    1. Added a `WELCOME_MESSAGE` constant with the initial greeting message
+    2. Added a new `useEffect` hook that triggers when the chat opens (`isOpen` changes)
+    3. When the chat opens and there are no messages, it adds the welcome message
+    4. Added a check in `handleSend` to prevent sending empty messages
+    5. The welcome message includes an emoji to make it more friendly and engaging
+
+    Now when users open the chat, they'll immediately see:
+    "Hi! I'm Kisu, Kanaitech AI sales expert 🤖. How can I help you today?"
+
+    This provides a better user experience by:
+    - Immediately engaging the user
+    - Making it clear it's an AI assistant
+    - Setting expectations about the bot's capabilities (sales expert)
+    - Using an emoji to make it more friendly and modern
+
+    The message will appear every time the chat is opened if there are no existing messages. 
+    All other functionality remains the same!
 
 
-Made changes.
+5. Add Quick Suggestion Buttons That Appear at the Bottom of the Chat 
+==================================================================
+    Let's quick suggestion buttons to make it easier for users to ask common questions. 
+    ```
 
-I've made the following enhancements:
+    Made the following enhancements:
 
-1. Added a `WELCOME_MESSAGE` constant with the initial greeting message
-2. Added a new `useEffect` hook that triggers when the chat opens (`isOpen` changes)
-3. When the chat opens and there are no messages, it adds the welcome message
-4. Added a check in `handleSend` to prevent sending empty messages
-5. The welcome message includes an emoji to make it more friendly and engaging
+    1. Added quick suggestion buttons that appear at the bottom of the chat, above the input field
+    2. The buttons are displayed only when there's just the welcome message (messages.length <= 1)
+    3. Each button:
+    - Uses a clean, minimal design with a white background and gray border
+    - Shows one of the FAQ questions
+    - When clicked:
+        - Fills the input with the question
+        - Immediately sends the message and gets the response
+    4. The buttons have a nice hover effect and are styled to look like chips/tags
+    5. Uses flex-wrap to handle multiple buttons nicely in the available space
 
-Now when users open the chat, they'll immediately see:
-"Hi! I'm Kisu, Kanaitech AI sales expert 🤖. How can I help you today?"
+    Now when users open the chat, they'll see:
+    1. The welcome message
+    2. Quick suggestion buttons for all FAQ questions
+    3. The regular input field and send button below
 
-This provides a better user experience by:
-- Immediately engaging the user
-- Making it clear it's an AI assistant
-- Setting expectations about the bot's capabilities (sales expert)
-- Using an emoji to make it more friendly and modern
+    Once they click a suggestion or send their first message, 
+    the suggestion buttons will disappear to keep the interface clean. 
+    This provides a more guided experience for new users while maintaining the flexibility of free-form input.
 
-The message will appear every time the chat is opened if there are no existing messages. All other functionality remains the same!
+
+6. Show only 3-4 of the most common/important questions as quick suggestion buttons.
+====================================================================================
+    Made the following changes:
+
+    1. Removed the `setInput(question)` since it's not needed (we're sending the question directly)
+    2. Added `setInput('')` at the end of the click handler to clear the input field
+
+    Now when you click a suggestion button:
+    1. The question will be sent immediately
+    2. The response will be shown
+    3. The input field will be cleared
+    4. The suggestion buttons will disappear (since messages.length will be > 1)
+
+    The behavior is now consistent with the regular send button functionality!
+
+
+    You make an excellent point! Having buttons for all FAQ questions isn't scalable, especially with a large FAQ database. Let me recommend a better approach:
+
+    ### Recommended Solution
+    Show only 3-4 of the most common/important questions as quick suggestion buttons. Here's how to modify the code:
+
+    ````jsx
+    // Add this constant at the top with your most important FAQs
+    const SUGGESTED_QUESTIONS = [
+        "What is Kanai Technologies?",
+        "What services do you offer?",
+        "How do I contact support?"
+    ];
+
+    // Then modify the button mapping section
+    <div className="flex flex-wrap gap-2">
+        {messages.length <= 1 && SUGGESTED_QUESTIONS.map((question, index) => (
+            <button
+                key={index}
+                onClick={() => {
+                    const userMsg = { text: question, from: 'user' };
+                    const botMsg = { text: faqs[question], from: 'bot' };
+                    setMessages([...messages, userMsg, botMsg]);
+                    setInput('');
+                }}
+                className="px-3 py-1.5 text-sm bg-white hover:bg-gray-50 text-gray-700 rounded-full border border-gray-300 transition-colors"
+            >
+                {question}
+            </button>
+        ))}
+    </div>
+    ````
+
+    ### Benefits of this approach:
+    1. **Better UX**: Less overwhelming for users
+    2. **Mobile-friendly**: Fewer buttons means better fit on small screens
+    3. **Focused guidance**: Directs users to the most important information first
+    4. **Scalable**: Works well even if your FAQ database grows
+    5. **Maintainable**: Easier to manage and update priority questions
+
+    You could also consider rotating these suggestions based on:
+    - Most frequently asked questions
+    - Current promotions or campaigns
+    - Seasonal relevance
+    - User context (if available)
+

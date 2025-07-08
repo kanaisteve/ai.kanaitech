@@ -1,0 +1,12 @@
+// Laravel Controller method to respond to chatbot messages using a database lookup
+
+// Tailwind React component for a minimal chatbot interface
+// React chatbot component with input and message history
+// Render user and bot messages differently
+// Scroll to bottom of chat on new message
+
+// Add quick-suggestion buttons inside the chatbot like: 
+    ["What is Kanai Technologies?", "How can I contact support?", "What services do you offer?"]
+    Clicking one should fill and submit the input.
+
+// SQL to seed a few FAQs into the chatbot table
