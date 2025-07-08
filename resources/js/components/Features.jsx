@@ -31,7 +31,7 @@ const features = [
 export default function Features() {
   return (
     // <div className="bg-white py-24 sm:py-32">
-    <div className="bg-white mb-16 sm:mb-32">
+    <div className="bg-white mb-16 sm:mb-32 py-24">
 
       <div className="mx-auto text-center mb-16">
         <h2 className="text-base font-semibold text-red-600">Why Choose Kanai Technologies</h2>

@@ -5,6 +5,7 @@ import Contact from './pages/Contact';
 import Services from './pages/Services';
 import Projects from './pages/Projects';
 import MainLayout from './Layouts/MainLayout';
+import ChatBot from './components/ChatBot';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
+        <ChatBot />
       </MainLayout>
     </Router>
   );
