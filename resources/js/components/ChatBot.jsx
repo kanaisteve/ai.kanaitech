@@ -7,10 +7,13 @@ const faqs = {
   "Am fine": "Great to hear! How can I assist you today?",
   "Am okay": "Great to hear! How can I assist you today?",
   "What is your name?": "My name is Kisu, your AI assistant.",
-  "What is Kanai Technologies?": "We\'re an AI-first company helping SMEs in Africa.",
+  "Whats your name?": "My name is Kisu, your AI assistant.",
+  "What is Kanai Technologies?": "We\'re an AI-first innovation company helping SMEs in Africa.",
+//   "What is Kanai Technologies?": "Kanaitech is an innovation-driven tech company for SMEs in Africa.",
+  "What services do you offer?": "We offer Web development, AI Bots, ERP platforms, and digital tools for businesses.",
   "What does Kanai Technologies do?": "We build AI-driven tools for SMEs.",
-  "What services do you offer?": "Custom ERP, AI Bots, Lending & Property platforms.",
-  "what are your business hours?": "We are open from 9 AM to 5 PM, Monday to Friday.",
+//   "What services do you offer?": "Custom ERP, AI agents, Lending & Property platforms.",
+  "What are your business hours?": "We are open from 9 AM to 5 PM, Monday to Friday.",
   "How do I contact support?": "Use the contact form or email info@kanaitech.com",
 };
 
@@ -46,13 +49,21 @@ const ChatBot = () => {
     }, [isOpen]);
 
     const handleSend = () => {
+        // Check if input is empty
         if (!input.trim()) return;
         
+        // Convert input to lowercase for matching
+        const userInput = input.trim().toLowerCase();
+
+        // Create user and bot messages
         const userMsg = { text: input, from: 'user' };
         const botMsg = {
-            text: faqs[input] || "Sorry, I don't have an answer for that.",
+            text: faqs[userInput] || "Sorry, I don't have an answer for that.",
             from: 'bot'
         };
+
+        // Add messages to state
+        // If the user input matches a suggested question, use the corresponding answer
         setMessages([...messages, userMsg, botMsg]);
         setInput('');
     };
@@ -69,7 +80,8 @@ const ChatBot = () => {
             {isOpen && (
                 <div className="flex flex-col h-[500px] w-[350px] bg-gray-100 rounded-lg shadow-lg mb-4">
                     <div className="flex justify-between items-center p-4 bg-red-500 text-white rounded-t-lg">
-                        <h3 className="font-semibold">Chat with Kisu</h3>
+                        {/* <h3 className="font-semibold">Chat with Kisu</h3> */}
+                        <h3 className="font-semibold">Ask Kisu 🤖</h3>
                         <button 
                             onClick={() => setIsOpen(false)}
                             className="text-white hover:text-gray-200"

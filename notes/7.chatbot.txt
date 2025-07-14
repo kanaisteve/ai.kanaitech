@@ -189,3 +189,130 @@
     - Seasonal relevance
     - User context (if available)
 
+7. Lowercase questions
+====================
+    # Database Best Practices for FAQ Storage
+
+    Here are the recommended practices for storing FAQ data:
+
+    ### 1. Case Handling
+    - Store questions in **lowercase** in the database
+    - Convert user input to lowercase when querying
+    - Handle display formatting in the presentation layer
+
+    ### 2. Text Normalization
+    - Remove extra spaces
+    - Trim whitespace
+    - Remove special characters (unless needed)
+    - Use consistent punctuation
+
+    ### 3. Example Implementation
+
+    ````php
+    $faqs = [
+        [
+            'question' => strtolower('What services do you offer?'),
+            'answer' => 'We offer Web development, AI Bots, ERP platforms, and digital tools for businesses.',
+            'company_id' => 1,
+            'status' => 'chatbot',
+        ],
+        [
+            'question' => strtolower('Hello'),
+            'answer' => 'Hi there! How can I assist you today?',
+            'company_id' => 1,
+            'status' => 'chatbot',
+        ],
+    ];
+    ````
+
+    ### 4. In Your ChatBot Component
+
+    ````jsx
+    const handleSend = () => {
+        if (!input.trim()) return;
+        
+        // Convert input to lowercase for matching
+        const userInput = input.trim().toLowerCase();
+        const userMsg = { text: input, from: 'user' }; // Keep original case for display
+        const botMsg = {
+            text: faqs[userInput] || "Sorry, I don't have an answer for that.",
+            from: 'bot'
+        };
+        setMessages([...messages, userMsg, botMsg]);
+        setInput('');
+    };
+    ````
+
+    ### 5. Benefits
+    - **Consistent matching**: Easier to match user questions with stored answers
+    - **Better search**: Improves search functionality
+    - **Data integrity**: Maintains consistent data format
+    - **Flexibility**: Original capitalization can be preserved in the answer display
+    - **Performance**: Simpler string comparisons
+
+    ### 6. Additional Considerations
+    - Consider using Full-Text Search for more complex matching
+    - Store common variations of questions
+    - Implement fuzzy matching for better results
+    - Add tags/categories for better organization
+    - Consider storing metadata like creation date, last updated, etc.
+
+    This approach gives you the best balance between data consistency and 
+    user experience while maintaining flexibility in how you display the content.
+
+
+8. FAQ Storage Best Practices - Case Sensitivity
+================================================
+
+    For FAQs, here's the recommended approach for case handling:
+
+    ### Questions
+    - Store in **lowercase** for consistent matching
+    - Convert user input to lowercase when searching/matching
+
+    ### Answers
+    - Store in **natural case** (proper capitalization) since they are displayed as-is
+    - No need to convert answers to lowercase since they're only for display
+
+    Here's how to modify your seeder:
+
+    ````php
+    $faqs = [
+        [
+            'question' => strtolower('What services do you offer?'),
+            'answer' => 'We offer Web development, AI Bots, ERP platforms, and digital tools for businesses.',
+            'company_id' => 1,
+            'status' => 'chatbot',
+        ],
+        [
+            'question' => strtolower('Hello'),
+            'answer' => 'Hi there! How can I assist you today?',
+            'company_id' => 1,
+            'status' => 'chatbot',
+        ],
+        // ...existing code...
+    ];
+    ````
+
+    And in your ChatBot component:
+
+    ````jsx
+    const handleSend = () => {
+        if (!input.trim()) return;
+        
+        // Convert input to lowercase for matching
+        const userInput = input.trim().toLowerCase();
+        const userMsg = { text: input, from: 'user' }; // Keep original case for display
+        const botMsg = {
+            text: faqs[userInput] || "Sorry, I don't have an answer for that.",
+            from: 'bot'
+        };
+        setMessages([...messages, userMsg, botMsg]);
+        setInput('');
+    };
+    ````
+
+    ### Why This Approach?
+    1. **Questions**: Lowercase ensures consistent matching regardless of user input case
+    2. **Answers**: Natural case maintains readability and professionalism in responses
+    3. **User Input**: Convert to lowercase only for matching, preserve original for display
